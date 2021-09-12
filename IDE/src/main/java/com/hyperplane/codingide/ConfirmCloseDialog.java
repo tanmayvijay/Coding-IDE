@@ -71,26 +71,29 @@ public class ConfirmCloseDialog extends JFrame implements ActionListener {
                 this.ide.textArea.setText("");
             }
             catch(IOException ex) {}
-            
-            if(this.open){
-                
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setAcceptAllFileFilterUsed(false);
+        }
+        else if (e.getActionCommand().equals("No")){
+            this.ide.savedText = "";
+            this.ide.textArea.setText("");
+        }
+        
+        if(this.open){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setAcceptAllFileFilterUsed(false);
 
-                for (int i=0; i<this.ide.supportedFileNameExtensionFilters.length; i++)
-                    fileChooser.addChoosableFileFilter(this.ide.supportedFileNameExtensionFilters[i]);
+            for (int i=0; i<this.ide.supportedFileNameExtensionFilters.length; i++)
+                fileChooser.addChoosableFileFilter(this.ide.supportedFileNameExtensionFilters[i]);
 
-                int action_ = fileChooser.showOpenDialog(this.ide);
-                if (action_ != JFileChooser.APPROVE_OPTION) return;
+            int action_ = fileChooser.showOpenDialog(this.ide);
+            if (action_ != JFileChooser.APPROVE_OPTION) return;
 
-                File fileName_ = fileChooser.getSelectedFile();
-                try {
-                    BufferedReader inputFile = new BufferedReader(new FileReader(fileName_));
-                    this.ide.textArea.read(inputFile, null);
-                    this.ide.savedText = this.ide.textArea.getText();
-                }
-                catch (Exception ex){}
+            File fileName_ = fileChooser.getSelectedFile();
+            try {
+                BufferedReader inputFile = new BufferedReader(new FileReader(fileName_));
+                this.ide.textArea.read(inputFile, null);
+                this.ide.savedText = this.ide.textArea.getText();
             }
+            catch (Exception ex){}
         }
     }
 }
